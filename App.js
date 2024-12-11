@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './src/screens/HomeScreen';
 import ReservarScreen from './src/screens/ReservarScreen';
 import LocalizacaoScreen from './src/screens/LocalizacaoScreen';
+import CartoesAcessoScreen from './src/screens/CartoesAcessoScreen';
 import { ReservationProvider } from './src/context/ReservationContext';
 
 const Stack = createStackNavigator();
@@ -16,6 +17,7 @@ export default function App() {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Reservar" component={ReservarScreen} />
           <Stack.Screen name="Localizacao" component={LocalizacaoScreen} />
+          <Stack.Screen name="CartoesAcesso" component={CartoesAcessoScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ReservationProvider>
