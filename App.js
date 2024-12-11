@@ -7,6 +7,7 @@ import LocalizacaoScreen from './src/screens/LocalizacaoScreen';
 import CartoesAcessoScreen from './src/screens/CartoesAcessoScreen';
 import ContaScreen from './src/screens/ContaScreen';
 import ConfiguracoesScreen from './src/screens/ConfiguracoesScreen';
+import MenuScreen from './src/screens/MenuScreen';
 import { ReservationProvider } from './src/context/ReservationContext';
 
 const Stack = createStackNavigator();
@@ -22,6 +23,7 @@ export default function App() {
           <Stack.Screen name="CartoesAcesso" component={CartoesAcessoScreen} />
           <Stack.Screen name="Conta" component={ContaScreen} />
           <Stack.Screen name="Configuracoes" component={ConfiguracoesScreen} />
+          <Stack.Screen name="Menu" component={MenuScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ReservationProvider>
