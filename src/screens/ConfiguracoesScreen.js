@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
-  ScrollView,
   Switch,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ConfiguracoesScreen = ({ navigation }) => {
-  const [notificacoes, setNotificacoes] = React.useState(true);
-  const [localizacao, setLocalizacao] = React.useState(true);
-  const [modoEscuro, setModoEscuro] = React.useState(true);
+  const [faceIdEnabled, setFaceIdEnabled] = useState(false);
+  const userInfo = {
+    nome: 'André Guimarães Lira',
+    pontos: '213234',
+  };
+
+  const handleLogout = () => {
+    // Implementar lógica de logout
+    navigation.navigate('Home');
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -25,90 +31,86 @@ const ConfiguracoesScreen = ({ navigation }) => {
         >
           <Icon name="arrow-back" size={24} color="#FFF" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Configurações</Text>
-        <View style={styles.headerRight} />
+        <Text style={styles.headerTitle}>Definições</Text>
+        <Icon name="settings" size={24} color="#FFF" />
       </View>
 
-      <ScrollView style={styles.content}>
-        {/* Configurações de Conta */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>CONTA</Text>
-          
-          <TouchableOpacity style={styles.optionButton}>
-            <Text style={styles.optionText}>Editar Perfil</Text>
-            <Icon name="chevron-right" size={24} color="#FFF" />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.optionButton}>
-            <Text style={styles.optionText}>Alterar Senha</Text>
-            <Icon name="chevron-right" size={24} color="#FFF" />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.optionButton}>
-            <Text style={styles.optionText}>Privacidade</Text>
-            <Icon name="chevron-right" size={24} color="#FFF" />
-          </TouchableOpacity>
+      <View style={styles.content}>
+        {/* Perfil Section */}
+        <Text style={styles.sectionTitle}>PERFIL</Text>
+        <View style={styles.profileSection}>
+          <Text style={styles.userName}>{userInfo.nome}</Text>
+          <Text style={styles.userPoints}>{userInfo.pontos} Pontos</Text>
         </View>
 
-        {/* Configurações do Aplicativo */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>APLICATIVO</Text>
-          
-          <View style={styles.toggleOption}>
-            <Text style={styles.optionText}>Notificações</Text>
-            <Switch
-              value={notificacoes}
-              onValueChange={setNotificacoes}
-              trackColor={{ false: '#767577', true: '#81b0ff' }}
-              thumbColor={notificacoes ? '#f5dd4b' : '#f4f3f4'}
-            />
-          </View>
-
-          <View style={styles.toggleOption}>
-            <Text style={styles.optionText}>Localização</Text>
-            <Switch
-              value={localizacao}
-              onValueChange={setLocalizacao}
-              trackColor={{ false: '#767577', true: '#81b0ff' }}
-              thumbColor={localizacao ? '#f5dd4b' : '#f4f3f4'}
-            />
-          </View>
-
-          <View style={styles.toggleOption}>
-            <Text style={styles.optionText}>Modo Escuro</Text>
-            <Switch
-              value={modoEscuro}
-              onValueChange={setModoEscuro}
-              trackColor={{ false: '#767577', true: '#81b0ff' }}
-              thumbColor={modoEscuro ? '#f5dd4b' : '#f4f3f4'}
-            />
-          </View>
-        </View>
-
-        {/* Sobre */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>SOBRE</Text>
-          
-          <TouchableOpacity style={styles.optionButton}>
-            <Text style={styles.optionText}>Versão do App</Text>
-            <Text style={styles.versionText}>1.0.0</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.optionButton}>
-            <Text style={styles.optionText}>Termos de Uso</Text>
-            <Icon name="chevron-right" size={24} color="#FFF" />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.optionButton}>
-            <Text style={styles.optionText}>Política de Privacidade</Text>
-            <Icon name="chevron-right" size={24} color="#FFF" />
-          </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity style={styles.logoutButton}>
-          <Text style={styles.logoutText}>Sair da Conta</Text>
+        {/* Main Options */}
+        <TouchableOpacity style={styles.optionButton}>
+          <Text style={styles.optionText}>Alterar a Senha</Text>
         </TouchableOpacity>
-      </ScrollView>
+
+        <View style={styles.paymentSection}>
+          <Text style={styles.optionText}>Informação de Pagamento</Text>
+          <Text style={styles.subOptionText}>Adicionar Cartão de Crédito</Text>
+        </View>
+
+        <TouchableOpacity style={styles.optionButton}>
+          <Text style={styles.optionText}>Dados Pessoais</Text>
+        </TouchableOpacity>
+
+        {/* Face ID and Logout */}
+        <View style={styles.bottomSection}>
+          <View style={styles.faceIdContainer}>
+            <Text style={styles.optionText}>Habilitar Face ID</Text>
+            <Switch
+              value={faceIdEnabled}
+              onValueChange={setFaceIdEnabled}
+              trackColor={{ false: '#4f4f4f', true: '#81b0ff' }}
+              thumbColor={faceIdEnabled ? '#f5dd4b' : '#f4f3f4'}
+              style={styles.switch}
+            />
+          </View>
+
+          <TouchableOpacity 
+            style={styles.logoutButton}
+            onPress={handleLogout}
+          >
+            <Text style={styles.logoutText}>Log out</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => navigation.navigate('Home')}
+        >
+          <Icon name="home" size={24} color="#FFF" />
+          <Text style={styles.navText}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => navigation.navigate('Reservar')}
+        >
+          <Icon name="shopping-bag" size={24} color="#FFF" />
+          <Text style={styles.navText}>Reservar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => navigation.navigate('CartoesAcesso')}
+        >
+          <Icon name="credit-card" size={24} color="#FFF" />
+          <Text style={styles.navText}>Cartões</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem}>
+          <Icon name="person" size={24} color="#FFF" />
+          <Text style={styles.navText}>Conta</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem}>
+          <Icon name="menu" size={24} color="#FFF" />
+          <Text style={styles.navText}>Menu</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -133,25 +135,28 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
   },
-  headerRight: {
-    width: 40,
-  },
   content: {
     flex: 1,
     padding: 20,
-  },
-  section: {
-    marginBottom: 30,
   },
   sectionTitle: {
     color: '#999',
     fontSize: 14,
     marginBottom: 15,
   },
+  profileSection: {
+    marginBottom: 30,
+  },
+  userName: {
+    color: '#FFF',
+    fontSize: 18,
+    marginBottom: 5,
+  },
+  userPoints: {
+    color: '#FFF',
+    fontSize: 16,
+  },
   optionButton: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     paddingVertical: 15,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.1)',
@@ -160,30 +165,51 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 16,
   },
-  toggleOption: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  paymentSection: {
     paddingVertical: 15,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.1)',
   },
-  versionText: {
+  subOptionText: {
     color: '#999',
     fontSize: 14,
+    marginTop: 5,
+  },
+  bottomSection: {
+    marginTop: 'auto',
+    marginBottom: 20,
+  },
+  faceIdContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  switch: {
+    transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }],
   },
   logoutButton: {
-    backgroundColor: '#FF4444',
-    padding: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 40,
+    paddingVertical: 15,
   },
   logoutText: {
     color: '#FFF',
     fontSize: 16,
-    fontWeight: 'bold',
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+    backgroundColor: 'rgba(139, 104, 3, 1)',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  navItem: {
+    alignItems: 'center',
+  },
+  navText: {
+    color: '#FFF',
+    fontSize: 12,
+    marginTop: 5,
   },
 });
 
